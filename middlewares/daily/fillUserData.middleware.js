@@ -41,6 +41,14 @@ const fillUserData = async (req, res, next) => {
 
     // You can attach new_data to the req object for further processing in the middleware chain
 
+    new_daily_data.forEach(item => {
+      item.nameLower = item.name.toLowerCase();
+    });
+    
+    // Step 2: Sort based on precomputed lowercase names using localeCompare for better string comparison
+    new_daily_data.sort((a, b) => {
+      return a.nameLower.localeCompare(b.nameLower);
+    });
     req.timeElapsedDaily = new_daily_data;
 
     next(); // Move to the next middleware
