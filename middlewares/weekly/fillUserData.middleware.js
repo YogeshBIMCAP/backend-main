@@ -38,6 +38,14 @@ const fillUserData = async (req, res, next) => {
 
     // Wait for all promises to resolve
     await Promise.all(promises);
+    new_weekly_data.forEach(item => {
+      item.nameLower = item.name.toLowerCase();
+    });
+    
+    // Step 2: Sort based on precomputed lowercase names using localeCompare for better string comparison
+    new_weekly_data.sort((a, b) => {
+      return a.nameLower.localeCompare(b.nameLower);
+    });
     
     // You can attach new_data to the req object for further processing in the middleware chain
       
