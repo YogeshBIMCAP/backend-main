@@ -95,6 +95,8 @@ const fillUserData = async (req, res, next) => {
         const userInfo = result[0];
         const userName = `${userInfo.NAME} ${userInfo.LAST_NAME}`;
         const userTasks = dailyData[userId];
+        console.log(userName);
+        
 
         // Push the result into new_data array
         new_daily_data.push({
