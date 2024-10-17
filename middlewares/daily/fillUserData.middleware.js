@@ -12,7 +12,7 @@ const fillUserData = async (req, res, next) => {
     const userIds = Object.keys(dailyData);
 
     // Use Promise.all to handle asynchronous requests
-    const promises =  userIds.map(async (userId) => {
+    const promises = userIds.map(async (userId) => {
       // Make the API request to get user details
       const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
         params: {
@@ -35,6 +35,9 @@ const fillUserData = async (req, res, next) => {
         });
       }
     });
+
+    // Wait for all promises to resolve
+    await Promise.all(promises);
 
     // You can attach new_data to the req object for further processing in the middleware chain
 
