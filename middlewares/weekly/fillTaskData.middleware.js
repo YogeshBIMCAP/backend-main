@@ -63,7 +63,7 @@ const fillTaskData = async (req, res, next) => {
   const { access_token } = req.body;
   const weeklyData = req.timeElapsedWeekly; // The input data from request
   let weeklyResult = [];
-  const rateLimit = 15; // Max 5 requests per second
+  const rateLimit = 10; // Max 5 requests per second
   const delayBetweenRequests = 1000 / rateLimit; // Delay between requests in ms
 
   try {
