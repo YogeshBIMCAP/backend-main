@@ -74,7 +74,7 @@ const fillUserData = async (req, res, next) => {
   const { access_token } = req.body;
   let weeklyData = req.timeElapsedWeekly.data; // Data with user and task info
   let new_weekly_data = [];
-  const rateLimit = 10; // Max 5 requests per second
+  const rateLimit = 12; // Max 5 requests per second
   const delayBetweenRequests = 1000 / rateLimit; // Delay between requests in ms
 
   try {
