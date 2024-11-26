@@ -20,13 +20,14 @@ import userRoutes from "./routes/user.routes.js"
 import timeRoutes from "./routes/time.routes.js"
 import taskRoutes from "./routes/task.routes.js"
 import reportRoutes from "./routes/report.routes.js"
-
+import departmentRoutes from "./routes/department.routes.js"
 
 
 app.use("/user",userRoutes)
 app.use("/time",timeRoutes)
 app.use("/task", taskRoutes)
 app.use("/report", reportRoutes)
+app.use("/department", departmentRoutes)
 
 app.listen(process.env.PORT||3000, ()=>{
     console.log(`Server is running on port ${process.env.PORT||3000}`)
