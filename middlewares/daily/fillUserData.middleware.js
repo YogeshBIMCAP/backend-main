@@ -5,7 +5,7 @@ const fillUserData = async (req, res, next) => {
   const { access_token, departments } = req.body;
   let dailyData = req.timeElapsedDaily.data;
 
-  console.log(departments);
+  console.log(req.body);
   
 
   let new_daily_data = [];
