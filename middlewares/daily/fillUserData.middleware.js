@@ -17,7 +17,7 @@ const fillUserData = async (req, res, next) => {
       const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
         params: {
           auth: access_token,
-          FILTER: { ID: userId, UF_DEPARTMENT: [270, 241] },
+          FILTER: { ID: userId, UF_DEPARTMENT: [296, 270] },
           SELECT: ["NAME", "LAST_NAME"],
         },
       });
