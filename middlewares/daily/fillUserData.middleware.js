@@ -2,7 +2,7 @@ import axios from "axios";
 import { timeElapsedDaily } from "./timeelapsed.middleware.js";
 
 const fillUserData = async (req, res, next) => {
-  const { access_token } = req.body;
+  const { access_token, departments } = req.body;
   let dailyData = req.timeElapsedDaily.data;
 
   let new_daily_data = [];
@@ -17,7 +17,7 @@ const fillUserData = async (req, res, next) => {
       const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
         params: {
           auth: access_token,
-          FILTER: { ID: userId },
+          FILTER: { ID: userId, UF_DEPARTMENT: departments },
           SELECT: ["NAME", "LAST_NAME"],
         },
       });
@@ -28,11 +28,11 @@ const fillUserData = async (req, res, next) => {
         const userName = `${userInfo.NAME} ${userInfo.LAST_NAME}`;
         const userTasks = dailyData[userId];
         // Push the result into new_data array
-        new_daily_data.push({
-          id: userId,
-          name: userName,
-          tasks: dailyData[userId].tasks,
-        });
+          new_daily_data.push({
+            id: userId,
+            name: userName,
+            tasks: dailyData[userId].tasks,
+          });
       }
     });
 

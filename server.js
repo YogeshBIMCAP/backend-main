@@ -32,7 +32,9 @@ app.get("/", async(req, res) => {
       `https://bimcap.bitrix24.com/oauth/token/?grant_type=authorization_code&client_id=local.674800c04736c3.51073976&client_secret=2SkIUBpq4Dml6UB5MHZhX1OJ12jhnSvwLk1q23ZLgyOjbvKXAc&code=${code}&scope=application_permissions&redirect_uri=application_URL`
     );
 
-    res.json(`${result.data.access_token}`);
+    
+
+    res.json(`${result.data}`);
   } else {
     res.send("No code parameter found in the query string.");
   }
