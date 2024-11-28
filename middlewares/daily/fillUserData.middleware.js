@@ -5,6 +5,9 @@ const fillUserData = async (req, res, next) => {
   const { access_token, departments } = req.body;
   let dailyData = req.timeElapsedDaily.data;
 
+  console.log(departments);
+  
+
   let new_daily_data = [];
 
   try {
@@ -17,7 +20,7 @@ const fillUserData = async (req, res, next) => {
       const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
         params: {
           auth: access_token,
-          FILTER: { ID: userId, UF_DEPARTMENT: [296, 270, 229] },
+          FILTER: { ID: userId, UF_DEPARTMENT: departments },
           SELECT: ["NAME", "LAST_NAME"],
         },
       });
