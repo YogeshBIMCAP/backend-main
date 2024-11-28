@@ -7,9 +7,7 @@ import {timeElapsedDaily as timeElapsedDaily } from "../middlewares/daily/timeel
 import {fillUserData as fillUserDataDaily} from "../middlewares/daily/fillUserData.middleware.js"
 import { fillTaskData as fillTaskDataDaily } from "../middlewares/daily/fillTaskData.middleware.js";
 import {dailyReport, weeklyReport } from "../controllers/report.controller.js";
-router.get("/", (req, res) => {
-    res.send("working");
-})
+
 router.post("/daily", timeElapsedDaily , fillUserDataDaily, fillTaskDataDaily, dailyReport);
 router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, fillTaskDataWeekly, weeklyReport );
 
