@@ -3,6 +3,7 @@ import { configDotenv } from "dotenv";
 import cors from "cors";
 import fs from "fs";
 import path from "path";
+import axios from "axios";
 
 const app = express();
 
@@ -43,6 +44,7 @@ import timeRoutes from "./routes/time.routes.js";
 import taskRoutes from "./routes/task.routes.js";
 import reportRoutes from "./routes/report.routes.js";
 import departmentRoutes from "./routes/department.routes.js";
+import axios from "axios";
 
 // Add existing routes
 app.use("/user", userRoutes);
