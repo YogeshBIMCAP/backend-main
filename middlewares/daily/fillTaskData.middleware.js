@@ -8,7 +8,7 @@ const fillTaskData = async (req, res, next) => {
   const dailyData = req.timeElapsedDaily; // The input data from request
 
   let dailyResult = [];
-  const rateLimit = 5; // Max 5 requests per second
+  const rateLimit = 12; // Max 5 requests per second
   const delayBetweenRequests = 1000 / rateLimit; // Delay between requests in ms
 
   try {
