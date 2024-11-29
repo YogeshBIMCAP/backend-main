@@ -19,4 +19,9 @@ const dailyReport = async(req , res)=>{
     res.status(200).send(data)
 }
 
-export {dailyReport , weeklyReport}
+const normalReport = async(req , res)=>{
+    const {normalTaskData} = req
+    console.log(normalTaskData);
+}
+
+export {normalReport, dailyReport , weeklyReport}

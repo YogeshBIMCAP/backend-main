@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { fetchPaginatedData } from '../utils/pagination.js';
 
 const getTaskList = async (req, res) => {
     const {access_token, accomplence , created_by , group_id} = req.body
@@ -41,4 +42,24 @@ const getTask = async(req , res)=>{
   }
 }
 
-export {getTaskList , getTask};
+const getAllProjects = async (req, res) => {
+  const { access_token } = req.body;
+
+  try {
+    // Use the utility function to fetch paginated data
+    const allProjects = await fetchPaginatedData(
+      `${process.env.ROOT_URL}/sonet_group.get`,
+      { access_token } // Pass the settings including the access token
+    );
+
+    res.status(200).json(allProjects);
+  } catch (error) {
+    console.error("Error fetching projects:", error.message);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch projects", details: error.message });
+  }
+};
+
+
+export {getTaskList , getTask, getAllProjects};

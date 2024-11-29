@@ -6,8 +6,9 @@ import { fillTaskData as fillTaskDataWeekly } from "../middlewares/weekly/fillTa
 import {timeElapsedDaily as timeElapsedDaily } from "../middlewares/daily/timeelapsed.middleware.js"
 import {fillUserData as fillUserDataDaily} from "../middlewares/daily/fillUserData.middleware.js"
 import { fillTaskData as fillTaskDataDaily } from "../middlewares/daily/fillTaskData.middleware.js";
-import {dailyReport, weeklyReport } from "../controllers/report.controller.js";
+import {dailyReport, normalReport, weeklyReport } from "../controllers/report.controller.js";
 
+router.post("/", normalReport )
 router.post("/daily", timeElapsedDaily , fillUserDataDaily, fillTaskDataDaily, dailyReport);
 router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, fillTaskDataWeekly, weeklyReport );
 
