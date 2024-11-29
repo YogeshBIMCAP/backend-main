@@ -1,6 +1,15 @@
 import express from "express";
 import fetchTimeElapsed from "../controllers/time.controller.js";
 import axios from "axios";
+import cors from "cors";
+
+const app = express();
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const router = express.Router();
 

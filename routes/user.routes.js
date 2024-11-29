@@ -1,6 +1,14 @@
 import express from "express";
 import { getUserName, getActiveUsers } from "../controllers/user.controller.js";
+import cors from "cors";
 
+const app = express();
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 const router = express.Router();
 
 // Route to fetch a specific user's name by ID

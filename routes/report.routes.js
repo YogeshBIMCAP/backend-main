@@ -7,6 +7,15 @@ import {timeElapsedDaily as timeElapsedDaily } from "../middlewares/daily/timeel
 import {fillUserData as fillUserDataDaily} from "../middlewares/daily/fillUserData.middleware.js"
 import { fillTaskData as fillTaskDataDaily } from "../middlewares/daily/fillTaskData.middleware.js";
 import {dailyReport, normalReport, weeklyReport } from "../controllers/report.controller.js";
+import cors from "cors";
+
+const app = express();
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 router.post("/", normalReport )
 router.post("/daily", timeElapsedDaily , fillUserDataDaily, fillTaskDataDaily, dailyReport);
