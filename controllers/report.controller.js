@@ -27,7 +27,7 @@ const dailyReport = async (req, res) => {
 
 const normalReport = async (req, res) => {
     try {
-      const {
+      let {
         access_token,
         creator,
         endDate,
@@ -36,7 +36,17 @@ const normalReport = async (req, res) => {
         responsible,
         tags,
       } = req.body;
-  
+      //values are comma separated strings converted to array
+      creator = creator && creator.length > 0 ? creator.split(",") : [];
+      tags = tags && tags.length > 0 ? tags.split(",") : [];
+      responsible = responsible && responsible.length > 0 ? responsible.split(",") : [];
+      project = project && project.length > 0 ? project.split(",") : [];
+      
+
+      console.log("project", project);  
+      console.log("creator", creator);  
+      console.log("tags", tags);  
+      console.log("responsible", responsible);
       const data = await fetchPaginatedData(
         `${process.env.ROOT_URL}/tasks.task.list`,
         {
@@ -56,7 +66,7 @@ const normalReport = async (req, res) => {
         return acc;
       }, []);
   
-      console.log(taskIds);
+      console.log("taskIds", taskIds);
   
       const time = await fetchElapsedTimeData(
         `${process.env.ROOT_URL}/task.elapseditem.getlist`,
