@@ -8,7 +8,7 @@ import axios from "axios";
  */
 export const fetchPaginatedData = async (
   url,
-  settings,
+  settings={},
   filter = {},
   Select = []
 ) => {
@@ -16,19 +16,32 @@ export const fetchPaginatedData = async (
   let start = 0;
   let hasMore = true;
 
+  console.log({
+    url,
+    settings,
+    filter,
+    Select
+  });
+  
+
   try {
     while (hasMore) {
       const response = await axios.get(url, {
         params: {
           auth: settings.access_token,
-          FILTER: filter,
-          SELECT: Select,
+          ORDER: { ID: "desc" },
+          filter: filter,
+          select: Select,
           start, // Pagination starts from this point
         },
       });
 
       const result = response.data.result;
       const next = response.data.next; // 'next' tells if more data is available
+
+      console.log(next);
+      console.log(result);
+      
 
       totalData = totalData.concat(result); // Append new data to the totalData array
 
@@ -87,5 +100,4 @@ export const fetchElapsedTimeData = async (url, params) => {
     throw new Error("Pagination failed");
   }
   return totalData; // Return the accumulated data
-
 };
