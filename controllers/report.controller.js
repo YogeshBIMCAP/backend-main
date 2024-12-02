@@ -154,9 +154,28 @@ const normalReport = async (req, res) => {
           }
         })
       );
+
+      const result = finalData.reduce((acc, item) => {
+        // Check if the id already exists in the accumulator
+        const existing = acc.find(group => group.name === item.name);
+      
+        if (existing) {
+          // If the id exists, push the task to the tasks array
+          existing.tasks.push(item.tasks);
+        } else {
+          // If the id doesn't exist, create a new group with the current item
+          acc.push({
+            id: item.id,
+            name: item.name,
+            tasks: [item.tasks]
+          });
+        }
+        
+        return acc;
+      }, []);
   
       // Send response only after all data processing is complete
-      res.status(200).send({finalData});
+      res.status(200).send({finalData : result});
     } catch (error) {
       console.error('Error in normalReport:', error);
       res.status(500).json({ 
