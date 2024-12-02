@@ -71,7 +71,7 @@ import axios from "axios";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const fillUserData = async (req, res, next) => {
-  const { access_token } = req.body;
+  const { access_token,departments } = req.body;
   let weeklyData = req.timeElapsedWeekly.data; // Data with user and task info
   let new_weekly_data = [];
   const rateLimit = 12; // Max 5 requests per second
