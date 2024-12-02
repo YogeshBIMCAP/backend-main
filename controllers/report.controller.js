@@ -159,7 +159,7 @@ const normalReport = async (req, res) => {
         })
       );
   
-      res.status(200).json({reportData : finalData});
+      res.status(200).send(finalData);
     } catch (error) {
       console.log(error.message);
       res.status(500).send(error);
