@@ -138,7 +138,7 @@ const normalReport = async (req, res) => {
                 name: item.name,
                 tasks: {
                   ...result,
-                  duration: item.SECONDS,
+                  duration: parseInt(item.SECONDS), // Convert seconds to an integer, duration: item.SECONDS,
                   createdDate: item.CREATED_DATE,
                 },
               };
