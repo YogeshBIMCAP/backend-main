@@ -36,17 +36,14 @@ const normalReport = async (req, res) => {
         responsible,
         tags,
       } = req.body;
-      //values are comma separated strings converted to array
+
+      // Convert comma-separated strings to arrays
       creator = creator && creator.length > 0 ? creator.split(",") : [];
       tags = tags && tags.length > 0 ? tags.split(",") : [];
       responsible = responsible && responsible.length > 0 ? responsible.split(",") : [];
       project = project && project.length > 0 ? project.split(",") : [];
-      
 
-      console.log("project", project);  
-      console.log("creator", creator);  
-      console.log("tags", tags);  
-      console.log("responsible", responsible);
+      // Fetch task list
       const data = await fetchPaginatedData(
         `${process.env.ROOT_URL}/tasks.task.list`,
         {
@@ -66,8 +63,7 @@ const normalReport = async (req, res) => {
         return acc;
       }, []);
   
-      console.log("taskIds", taskIds);
-  
+      // Fetch elapsed time data
       const time = await fetchElapsedTimeData(
         `${process.env.ROOT_URL}/task.elapseditem.getlist`,
         {
@@ -82,8 +78,8 @@ const normalReport = async (req, res) => {
         }
       );
   
-      // Fetch user names and add to `time`
-      let finalData = await Promise.all(
+      // Fetch user names and add to time data
+      const timeWithUserNames = await Promise.all(
         time.map(async (item) => {
           try {
             const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
@@ -100,21 +96,21 @@ const normalReport = async (req, res) => {
               const name = `${user.NAME} ${user.LAST_NAME}`;
               return { ...item, name };
             } else {
-              return { ...item, name: null }; // Handle empty result gracefully
+              return { ...item, name: null };
             }
           } catch (error) {
             console.error(
               `Error fetching user data for USER_ID: ${item.USER_ID}`,
               error
             );
-            return { ...item, name: "Error fetching user" }; // Handle errors gracefully
+            return { ...item, name: "Error fetching user" };
           }
         })
       );
   
-      // Fetch task details and add to `finalData`
-      finalData = await Promise.all(
-        finalData.map(async (item) => {
+      // Fetch task details and add to final data
+      const finalData = await Promise.all(
+        timeWithUserNames.map(async (item) => {
           try {
             const response = await axios.get(
               `${process.env.ROOT_URL}/tasks.task.get`,
@@ -138,31 +134,35 @@ const normalReport = async (req, res) => {
   
             if (result) {
               return {
-                id : item.ID,
-                name :item.name,
+                id: item.ID,
+                name: item.name,
                 tasks: {
                   ...result,
-                  duration : item.SECONDS,
-                  createdDate : item.CREATED_DATE,
+                  duration: item.SECONDS,
+                  createdDate: item.CREATED_DATE,
                 },
               };
             } else {
-              return { ...item, tasks: null }; // Handle case where task is null or undefined
+              return { ...item, tasks: null };
             }
           } catch (error) {
             console.error(
               `Error fetching task data for TASK_ID: ${item.TASK_ID}`,
               error
             );
-            return { ...item, task: { error: "Error fetching task data" } }; // Graceful error handling
+            return { ...item, tasks: { error: "Error fetching task data" } };
           }
         })
       );
   
-      res.status(200).send(finalData);
+      // Send response only after all data processing is complete
+      res.status(200).json(finalData);
     } catch (error) {
-      console.log(error.message);
-      res.status(500).send(error);
+      console.error('Error in normalReport:', error);
+      res.status(500).json({ 
+        message: 'An error occurred while processing the report', 
+        error: error.message 
+      });
     }
   };
   
