@@ -156,7 +156,7 @@ const normalReport = async (req, res) => {
       );
   
       // Send response only after all data processing is complete
-      res.status(200).json(finalData);
+      res.status(200).send({finalData});
     } catch (error) {
       console.error('Error in normalReport:', error);
       res.status(500).json({ 
