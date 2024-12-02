@@ -11,7 +11,7 @@ const timeElapsedDaily = async (req, res, next) => {
     const params = {
       auth: access_token,
       ORDER: { ID: "desc" },
-      SELECT: ["TASK_ID", "USER_ID", "SECONDS", "ID", "CREATED_DATE"],
+      SELECT: ["ID" , "TASK_ID" , "*"],
       FILTER: {
         ">=CREATED_DATE": startDate,
         "<=CREATED_DATE": `${endDate} 23:59:59`,

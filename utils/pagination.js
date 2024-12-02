@@ -57,9 +57,9 @@ export const fetchElapsedTimeData = async (url, params) => {
       const response = await axios.get(url, {
         params: {
           auth: params.auth,
-          ORDER: params.ORDER,
-          FILTER: params.FILTER,
-          select:["ID" , "TASK_ID" , "*"],
+          ORDER: params.ORDER || [],
+          FILTER: params.FILTER || [],
+          select:params.SELECT || [],
           PARAMS: {
             NAV_PARAMS: {
               nPageSize: 50, // Number of items per page
