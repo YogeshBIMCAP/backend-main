@@ -31,7 +31,7 @@ const normalReport = async (req, res) => {
   const { access_token, creator, tags, responsible, project } = req.body;
   const dailyData = req.timeElapsedDaily; // The input data from request
 
-  if(responsible.length > 0){
+  if(responsible && responsible.length > 0){
 
   try {
     // Extract task IDs for batch fetching
