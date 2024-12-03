@@ -60,6 +60,8 @@ export const fetchElapsedTimeData = async (url, params) => {
   let start = 0;
   let hasMore = true;
   let page = 1
+
+  console.log("fetching data", url, params);
   
 
   try {
@@ -80,6 +82,8 @@ export const fetchElapsedTimeData = async (url, params) => {
           
         },
       });
+
+      console.log(response.data);
       if (response.data.result.length == 50) {
 
         

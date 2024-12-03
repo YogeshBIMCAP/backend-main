@@ -5,7 +5,7 @@ import {
 } from "../../utils/timeElapsedFormatting.js";
 
 const timeElapsedDaily = async (req, res, next) => {
-  const { access_token, startDate, endDate } = req.body;
+  const { access_token, startDate, endDate, responsible } = req.body;
   try {
     // Use only valid sorting keys in the ORDER parameter
     const params = {
@@ -13,6 +13,7 @@ const timeElapsedDaily = async (req, res, next) => {
       ORDER: { ID: "desc" },
       SELECT: ["ID" , "TASK_ID" , "*"],
       FILTER: {
+        "USER_ID" : responsible || [],
         ">=CREATED_DATE": startDate,
         "<=CREATED_DATE": `${endDate} 23:59:59`,
       },
