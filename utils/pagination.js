@@ -38,9 +38,6 @@ export const fetchPaginatedData = async (
 
       const result = response.data.result;
       const next = response.data.next; // 'next' tells if more data is available
-
-      console.log(next);
-      console.log(result);
       
 
       totalData = totalData.concat(result); // Append new data to the totalData array
@@ -63,6 +60,7 @@ export const fetchElapsedTimeData = async (url, params) => {
   let start = 0;
   let hasMore = true;
   let page = 1
+  
 
   try {
     while (hasMore) {
@@ -82,8 +80,9 @@ export const fetchElapsedTimeData = async (url, params) => {
           
         },
       });
-
       if (response.data.result.length == 50) {
+
+        
         start += 50;
         page++
         const result = response.data.result;
