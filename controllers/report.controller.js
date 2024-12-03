@@ -134,12 +134,16 @@ const normalReport = async (req, res) => {
       }
 
       // Add the processed user and tasks to the daily result array
+      if(userTasks.length > 0){
       dailyResult.push({
         id: user.id,
         name: user.name,
         tasks: userTasks, // The tasks array for this user
       });
     }
+    }
+
+
 
     // Attach the results to req for further processing or send it as a response
     req.dailyTaskData = dailyResult; // Add daily task data
