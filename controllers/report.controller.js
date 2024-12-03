@@ -148,7 +148,7 @@ const normalReport = async (req, res) => {
     // Attach the results to req for further processing or send it as a response
     req.dailyTaskData = dailyResult; // Add daily task data
 
-    res.send({fincalData : dailyResult})
+    res.send({finalData : dailyResult})
 }  catch (error) {
   console.log("Error in fillTaskData:", error);
   res.status(500).send("An error occurred while fetching task data.");
