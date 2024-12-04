@@ -10,7 +10,7 @@ export const fetchPaginatedData = async (
   url,
   settings={},
   filter = {},
-  Select = []
+  Select = [],
 ) => {
   let totalData = [];
   let start = 0;
@@ -29,6 +29,7 @@ export const fetchPaginatedData = async (
       const response = await axios.get(url, {
         params: {
           auth: settings.access_token,
+          IS_ADMIN: "Y",
           ORDER: { ID: "desc" },
           filter: filter,
           select: Select,
