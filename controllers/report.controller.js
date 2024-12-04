@@ -133,6 +133,8 @@ const normalReport = async (req, res) => {
         }
       }
 
+      userTasks.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
+
       // Add the processed user and tasks to the daily result array
       if(userTasks.length > 0){
       dailyResult.push({

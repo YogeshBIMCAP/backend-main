@@ -45,6 +45,8 @@ const fillTaskData = async (req, res, next) => {
           await delay(delayBetweenRequests);
         }
       }
+      
+      userTasks.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
 
       // Add the processed user and tasks to the daily result array
       dailyResult.push({
