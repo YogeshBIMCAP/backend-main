@@ -50,7 +50,7 @@ const normalReport = async (req, res) => {
           ID: taskIds,
           CREATED_BY: creator || null,
           TAG: tags || [],
-          GROUP_ID : project
+          GROUP_ID : project || []
         },
       },
     });
@@ -117,7 +117,7 @@ const normalReport = async (req, res) => {
         
 
         // Add task details to the userTasks array
-        if(project.includes(taskData?.groupId)){
+        if(project && project.includes(taskData?.groupId)){
           
           userTasks.push({
             id: task.taskId,
