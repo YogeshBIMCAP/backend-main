@@ -69,7 +69,7 @@ const fillTaskData = async (req, res, next) => {
   try {
     // Iterate through each user in the weekly data
     for (const user of weeklyData) {
-      const userTasks = [];
+      let userTasks = [];
 
       // Iterate through each taskId for the current user
       const taskIds = Object.keys(user.tasks);
@@ -82,7 +82,7 @@ const fillTaskData = async (req, res, next) => {
             auth: access_token,
             taskId: taskId,
             select: ["TITLE", "PARENT_ID", "GROUP_ID", "STATUS", "TAGS", "GROUP", "CREATED_BY"],
-          },
+          }, 
         });
         const taskData = response.data.result.task;
 
@@ -99,6 +99,9 @@ const fillTaskData = async (req, res, next) => {
           await delay(delayBetweenRequests);
         }
       }
+
+      userTasks.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
+
 
       // Add the processed user and tasks to the weekly result array
       weeklyResult.push({

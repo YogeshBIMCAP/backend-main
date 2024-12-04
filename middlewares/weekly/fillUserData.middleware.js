@@ -104,6 +104,7 @@ const fillUserData = async (req, res, next) => {
         new_weekly_data.push({
           id: userId,
           name: userName,
+          photo : userInfo.PERSONAL_PHOTO,
           tasks: userTasks,
         });
       }
