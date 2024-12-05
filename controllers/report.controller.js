@@ -27,7 +27,7 @@ const dailyReport = async (req, res) => {
 };
 
 const normalReport = async (req, res) => {
-  const { access_token, creator, tags, responsible, project } = req.body;
+  const { access_token, creator, tags, project } = req.body;
   const dailyData = req.timeElapsedDaily; // The input data from request
 
     try {
@@ -46,8 +46,6 @@ const normalReport = async (req, res) => {
         acc[batchIndex].push(taskId);
         return acc;
       }, []);
-
-      console.log("Task Batches:", taskBatches);
 
       const batchResponse = [];
 
@@ -107,7 +105,7 @@ const normalReport = async (req, res) => {
               }
               return null; // Explicitly return null for tasks without matching data
             })
-            .filter((task) => task !== null ), // Remove null values
+            .filter((task) => task !== null ).sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate)), // Remove null values
         };
       }).filter((user) => user.tasks.length > 0);
 
