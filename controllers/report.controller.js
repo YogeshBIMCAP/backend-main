@@ -151,32 +151,32 @@ const normalReport = async (req, res) => {
             let match = true;
     
             // Check creator
-            if (creator &&  creator!=="") {
-              match = match && taskData.createdBy === creator;
+            if (creator &&  creator.length > 0) {
+              console.log(creator,taskData?.createdBy);
+              match = match && creator.includes(taskData?.createdBy);
+              
             }
     
             // Check tags
             if (tags && tags.length > 0) {
               const taskTags = Object.values(taskData?.tags || {}).map(
                 (t) => t.title
-              )
-              console.log(taskTags);
-              
+              )     
+              console.log(tags ,taskTags);
+                       
               match =
                 match &&
                 tags.every((tag) => {
                   return taskTags.includes(tag);
-                });
-
-                console.log(match);
-                
+                });                
             }
     
             // Check project
             if (project && project.length > 0) {
               match = match && project.includes(taskData.groupId);
             }
-    
+            console.log(match);
+            
             return match;
           })();
     
