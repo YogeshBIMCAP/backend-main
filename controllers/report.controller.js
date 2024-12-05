@@ -135,17 +135,17 @@ const normalReport = async (req, res) => {
           const taskData = response.data.result.task;
     
           // Apply dynamic filtering logic
-          const matchesProject =
-            project && project.length > 0 && project.includes(taskData?.groupId);
-          const matchesTags =
-            tags &&
-            tags.length > 0 &&
-            tags.some((tag) =>
-              Object.values(taskData.tags || {}).some(
-                (taskTag) => taskTag.title.toLowerCase() === tag.toLowerCase()
-              )
-            );
-          const matchesCreator = creator && taskData?.createdBy === creator;
+          // const matchesProject =
+          //   project && project.length > 0 && project.includes(taskData?.groupId);
+          // const matchesTags =
+          //   tags &&
+          //   tags.length > 0 &&
+          //   tags.some((tag) =>
+          //     Object.values(taskData.tags || {}).some(
+          //       (taskTag) => taskTag.title.toLowerCase() === tag.toLowerCase()
+          //     )
+          //   );
+          // const matchesCreator = creator && taskData?.createdBy === creator;
     
           const matches = (() => {
             let match = true;
