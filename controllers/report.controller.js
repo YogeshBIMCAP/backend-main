@@ -151,20 +151,25 @@ const normalReport = async (req, res) => {
             let match = true;
     
             // Check creator
-            if (creator) {
+            if (creator &&  creator!=="") {
               match = match && taskData.createdBy === creator;
             }
     
             // Check tags
             if (tags && tags.length > 0) {
+              const taskTags = Object.values(taskData?.tags || {}).map(
+                (t) => t.title
+              )
+              console.log(taskTags);
+              
               match =
                 match &&
-                tags.some((tag) => {
-                  const taskTags = Object.values(taskData.tags || {}).map(
-                    (t) => t.title
-                  );
+                tags.every((tag) => {
                   return taskTags.includes(tag);
                 });
+
+                console.log(match);
+                
             }
     
             // Check project
