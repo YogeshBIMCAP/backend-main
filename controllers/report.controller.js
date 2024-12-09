@@ -119,7 +119,7 @@ const normalReport = async (req, res) => {
       // Attach the results to `req` for further processing
       req.dailyTaskData = finalData;
 
-      res.status(200).send({batchResponse});
+      res.status(200).send({finalData});
     } catch (error) {
       console.error("Error in fillTaskData:", error);
       res.status(500).send("An error occurred while fetching task data.");
