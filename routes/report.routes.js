@@ -19,7 +19,8 @@ app.use(
 
 router.post("/",timeElapsedDaily , fillUserDataDaily, normalReport )
 router.post("/daily", timeElapsedDaily , fillUserDataDaily, fillTaskDataDaily, dailyReport);
-router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, weeklyReport );
+router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, fillTaskDataWeekly, weeklyReport );
+// router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, weeklyReport );
 
 // Export the router
 export default router;
