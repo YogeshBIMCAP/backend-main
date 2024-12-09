@@ -54,6 +54,8 @@ const fillUserData = async (req, res, next) => {
     });
     req.timeElapsedDaily = new_daily_data;
 
+    // res.send(new_daily_data);
+
     next(); // Move to the next middleware
   } catch (error) {
     console.log("Error in fillUserData:", error.message);

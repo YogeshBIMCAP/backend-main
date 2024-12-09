@@ -17,6 +17,7 @@ app.use(
   })
 );
 
+router.post("/time",timeElapsedDaily, fillUserDataDaily)
 router.post("/",timeElapsedDaily , fillUserDataDaily, normalReport )
 router.post("/daily", timeElapsedDaily , fillUserDataDaily, fillTaskDataDaily, dailyReport);
 router.post("/weekly", timeElapsedWeekly , fillUserDataWeekly, fillTaskDataWeekly, weeklyReport );
