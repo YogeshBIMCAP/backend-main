@@ -25,9 +25,11 @@ const timeElapsedDaily = async (req, res, next) => {
       params
     );
     const dayResult = dailyTimeElapsedFormatting(allResults);
+    const weekResult = weeklyTimeElapsedFormatting(allResults);
     // console.log(weekResult);
 
     req.timeElapsedDaily = { data: dayResult, count: dayResult.length };
+    req.timeElapsedWeekly = { data: weekResult, count: weekResult.length };
 
     next();
   } catch (error) {

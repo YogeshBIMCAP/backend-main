@@ -4,18 +4,21 @@ import { timeElapsedDaily } from "./timeelapsed.middleware.js";
 const fillUserData = async (req, res, next) => {
   const { access_token, departments } = req.body;
   let dailyData = req.timeElapsedDaily.data;
+  let weeklyData = req.timeElapsedWeekly.data;
 
   console.log(req.body);
   
 
   let new_daily_data = [];
+  let new_weekly_data = [];
 
   try {
     // Get an array of all user IDs (keys of the data object)
-    const userIds = Object.keys(dailyData);
+    const dailyUserIds = Object.keys(dailyData);
+    const weeklyUserIds = Object.keys(dailyData);
 
     // Use Promise.all to handle asynchronous requests
-    const promises = userIds.map(async (userId) => {
+    const dailyPromises = dailyUserIds.map(async (userId) => {
       // Make the API request to get user details
       const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
         params: {
@@ -38,13 +41,41 @@ const fillUserData = async (req, res, next) => {
           });
       }
     });
+    const weeklyPromises = weeklyUserIds.map(async (userId) => {
+      // Make the API request to get user details
+      const response = await axios.get(`${process.env.ROOT_URL}/user.get`, {
+        params: {
+          auth: access_token,
+          FILTER: { ID: userId, UF_DEPARTMENT: departments },
+          SELECT: ["NAME", "LAST_NAME"],
+        },
+      });
+
+      const result = response.data.result;
+      if (result.length > 0) {
+        const userInfo = result[0];
+        const userName = `${userInfo.NAME} ${userInfo.LAST_NAME}`;
+        const userTasks = weeklyData[userId];
+        // Push the result into new_data array
+          new_weekly_data.push({
+            id: userId,
+            name: userName,
+            tasks: weeklyData[userId].tasks,
+          });
+      }
+    });
 
     // Wait for all promises to resolve
-    await Promise.all(promises);
+    await Promise.all(dailyPromises);
+    await Promise.all(weeklyPromises);
 
     // You can attach new_data to the req object for further processing in the middleware chain
 
     new_daily_data.forEach(item => {
+      item.nameLower = item.name.toLowerCase();
+    });
+
+    new_weekly_data.forEach(item => {
       item.nameLower = item.name.toLowerCase();
     });
     
@@ -54,7 +85,11 @@ const fillUserData = async (req, res, next) => {
     });
     req.timeElapsedDaily = new_daily_data;
 
-    // res.send(new_daily_data);
+    new_weekly_data.sort((a, b) => {
+      return a.nameLower.localeCompare(b.nameLower);
+    });
+    req.timeElapsedWeekly = new_weekly_data;
+
 
     next(); // Move to the next middleware
   } catch (error) {
